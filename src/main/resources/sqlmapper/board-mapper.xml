@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardDAO">
+	<!-- aliases에서 가져온 'board' -->
+	<!-- 둘다 참이 아닌경우 문법이 아닌 경우 쿼리가 이상해지기 때문에 넣어준 1=1 -->
+
+	<select id="getNoticeList" parameterType="board" resultType="board">
+		select * from (select rownum as rnum, b.* from(select * from notice where 1=1
+		<if test="searchType == 'TITLE'">
+			and title like '%${searchKeyword}%'
+		</if>
+		<if test="searchType == 'CONTENT'">
+			and content like '%${searchKeyword}%'
+		</if>
+		order by seq desc) b) where rnum between #{startList} and #{endList}
+	</select>
+	<select id="getInfoList" parameterType="board" resultType="board">
+		select * from (select rownum as rnum, b.*
+		from(select * from INFORMATION where 1=1
+		<if test="searchType == 'TITLE'">
+			<if test="contentType == 'WORKOUT'">
+				and title like '%${searchKeyword}%' and contentType like '%${contentType}%'
+			</if>
+			<if test="contentType == 'FOOD'">
+				and title like '%${searchKeyword}%' and contentType like '%${contentType}%'
+			</if>
+			<if test="contentType == 'ETC'">
+				and title like '%${searchKeyword}%' and contentType like '%${contentType}%'
+			</if>
+		</if>
+		<if test="searchType == 'CONTENT'">
+			<if test="contentType == 'WORKOUT'">
+				and content like '%${searchKeyword}%' and contentType like '%${contentType}%'
+			</if>
+			<if test="contentType == 'FOOD'">
+				and content like '%${searchKeyword}%' and contentType like '%${contentType}%'
+			</if>
+			<if test="contentType == 'ETC'">
+				and content like '%${searchKeyword}%' and contentType like '%${contentType}%'
+			</if>
+		</if>
+		order by seq desc) b)
+	</select>
+	<select id="getBoard" parameterType="board" resultType="board">
+		<if test="category == 'NOTICE'">
+			select * from notice where seq=#{seq}
+		</if>
+		<if test="category == 'INFO'">
+			select * from information where seq=#{seq}
+		</if>
+	</select>
+	<select id="getBoardCnt" parameterType="board" resultType="int">
+		<if test="category == 'NOTICE'">
+			select count(*) from notice where 1=1
+	   		<if test="searchType == 'TITLE'">
+	    		AND title like '%${searchKeyword}%'
+	    	</if>
+		    <if test="searchType == 'CONTENT'">
+		     	AND content like '%${searchKeyword}%'
+		    </if>
+		</if>
+		<if test="category == 'INFO'">
+			select count(*) from information where 1=1
+	   		<if test="searchType == 'TITLE'">
+	    		AND title like '%${searchKeyword}%'
+	    	</if>
+		    <if test="searchType == 'CONTENT'">
+		     	AND content like '%${searchKeyword}%'
+		    </if>
+		</if>
+	</select>
+	<select id="updateBoardCnt">
+		<if test="category == 'NOTICE'">
+			update notice set cnt = cnt + 1 where seq = #{seq}
+		</if>
+		<if test="category == 'INFO'">
+			update information set cnt = cnt + 1 where seq = #{seq}
+		</if>
+	</select>
+	<select id="insertBoard">
+		<if test="category == 'NOTICE'">
+			insert into notice (seq, title, writer, content, filename)
+			values((select COALESCE(max(seq),0)+1 from notice a), #{title},#{writer},#{content}, #{filename})
+		</if>
+		<if test="category == 'INFO'">
+			insert into information (seq, title, contenttype, writer, content)
+			values((select COALESCE(max(seq),0)+1 from notice a), #{title},
+			#{contentType},#{writer},#{content})
+		</if>
+	</select>
+	<select id="updateBoard"> 
+		<if test="category == 'NOTICE'">
+			update notice set title=#{title}, content=#{content}, filename=#{filename} where seq = #{seq} and writer=#{writer}
+		</if>
+		<if test="category == 'INFO'">
+			update information set title=#{title}, content=#{content}, contenttype=#{contentType},
+			filename=#{filename} where seq = #{seq} and writer=#{writer}
+		</if>
+	</select>
+	<select id="updateBoardFile">
+		<if test="category == 'NOTICE'">
+			update notice set filename=#{filename} where seq=#{seq}
+		</if>
+		<if test="category == 'INFO'">
+			update information set filename=#{filename} where seq=#{seq}
+		</if>
+	</select>
+	<select id="deleteBoard">
+		<if test="category == 'NOTICE'">
+			update notice set is_deleted =1 where seq=#{seq}
+		</if>
+		<if test="category == 'INFO'">
+			update information set is_deleted =1 where seq=#{seq}
+		</if>
+	</select>
+</mapper>

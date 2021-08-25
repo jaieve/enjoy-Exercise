@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommentDAO">
+<!-- 
+	<select id="getBoard"
+		parameterType="com.enjoyexercise.wwww.vo.BoardVO"
+		resultType="com.enjoyexercise.wwww.vo.BoardVO">
+		select * from board where seq=#{seq}
+	</select> -->
+	<!-- aliases에서 가져온 'board' -->
+	<!-- 둘다 참이 아닌경우 문법이 아닌 경우 쿼리가 이상해지기 때문에 넣어준 1=1 -->
+	<!-- <select id="getCommentCnt" parameterType="board">
+		select count(*) from reply where board_id=#{seq} and category=#{}	
+	</select>-->
+	<select id="getCommentList" parameterType="board"
+		resultType="comment">
+		select * from reply where dep=0 and is_deleted = 0 and board_id=#{seq} and category=#{category} order by bundle_id, reply_id
+	</select>
+	<select id="getRecommentList" parameterType="board"
+		resultType="comment">
+		select * from reply where dep=1 and is_deleted = 0 and board_id=#{seq} and category=#{category} order by bundle_id, reply_id
+	</select>
+	<insert id="insertComment" parameterType="comment">
+		<!-- 댓글을 작성하는 경우 bundle_id가 null이면 댓글 작성하는 것. 현재시간으로 기입
+		//대댓글 작성하는 경우 어떤 댓글의 대댓인지 받아와야함. get해서 원댓글의 reply_id값을 가져오고 대입 -->
+		<if test="dep==0">
+		insert into reply (dep,user_id, user_nickname, reply, category, board_id)
+		values (0, #{user_id}, #{user_nickname}, #{reply}, #{category}, #{board_id})
+		</if>
+		<if test="dep==1">
+		insert into reply (dep, bundle_id, user_id, user_nickname, reply, category, board_id)
+		values(#{dep}, #{bundle_id}, #{user_id}, #{user_nickname}, #{reply},#{category}, #{board_id})
+		</if>
+	</insert>
+	<delete id="deleteComment" parameterType="comment">
+		delete from reply where reply_id=#{reply_id} and board_id=#{board_id}
+	</delete>
+	<update id="updateComment" parameterType="comment">
+		update reply set reply=#{reply},updated_at= systimestamp  where reply_id=#{reply_id}
+	</update>
+</mapper>

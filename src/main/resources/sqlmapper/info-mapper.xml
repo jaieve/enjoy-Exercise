@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InfoDAO">
+<!-- 
+	<select id="getBoard"
+		parameterType="com.enjoyexercise.wwww.vo.BoardVO"
+		resultType="com.enjoyexercise.wwww.vo.BoardVO">
+		select * from board where seq=#{seq}
+	</select> -->
+	<!-- aliases에서 가져온 'board' -->
+	<!-- 둘다 참이 아닌경우 문법이 아닌 경우 쿼리가 이상해지기 때문에 넣어준 1=1 -->
+<!-- 	<select id="getUserList" parameterType="board"
+		resultType="board">
+		select * from (select rownum as rnum, b.* 
+		from(select * from board where 1=1 
+	    <if test="searchType == 'TITLE'">
+	    	and title like '%${searchKeyword}%'
+	    </if>
+	    <if test="searchType == 'CONTENT'">
+	     	and content like '%${searchKeyword}%'
+	    </if>
+		order by seq desc) b) where rnum between #{startList} and #{endList}
+	</select>
+	 -->
+</mapper>

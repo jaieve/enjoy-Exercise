@@ -1,0 +1,60 @@
+@charset "UTF-8";
+/*reset*/
+*{margin:0; padding:0;}
+li{list-style: none}
+a{text-decoration: none;}
+/*main*/
+/*wrapper*/
+.wrapper{width:1050px; margin:0 auto;}
+.clearfix{content:''; display:block; clear:both;}
+
+/*header*/
+header{
+	height: 75px; background-color:#7500eb;border:1px solid #6002bf;
+	position:fixed ; width:100%; z-index:9999; top: 0; left:0;}
+h1{float:left;color:white;line-height:75px;}
+
+.menu{}
+.menu li{float:right;}
+.menu a:link{line-height:75px; color:white; padding: 0 15px;display:block;}
+.menu a:visited{line-height:75px; color:white; padding: 0 15px;display:block;}
+
+/*mainImage*/
+#mainImgSlide {position:static;display:absolute;top:100px;width:1050px;height:410px;margin:0 auto;background-position:center;}
+
+.content {width:1048px;height:600px;border:1px solid grey;margin-left:auto;margin-right:auto;padding:5px}
+	.boards {width:73%;height:592px;border:1px solid grey;float:left;margin:5px}
+		.greeting {border:1px solid grey;margin:10px 9px;width:745px;height: 300px;}
+			.greeting a:link{color:brown}
+			.greeting a:visited{color:brown}
+		.notice {border:1px solid grey;margin:10px 9px;width:745px;height: 300px;}
+		.information {border:1px solid grey;margin:10px 9px;width:745px;height: 300px;}
+		.cal {border:1px solid grey;margin:10px 9px;width:745px;height: 150px;}
+	.sidebar {width:25%;height:592px;border:1px solid grey;float:right;margin:5px 5px 5px 0;text-align:center}
+		.sidebar #logoImg{width:245px;height:245px;border:1px solid black;margin:10px auto;display:inline-block;}
+		#loginuser {text-align:center;width:245px;height:200px;border:1px solid grey;margin:0 auto;display:inline-block;}
+			#loginuser img{object-fit:contain; width:150px; height:150px;border-radius: 70%;
+    overflow: hidden;}
+
+/*-------------myPage.jsp--------------*/
+.profile {
+    width: 100px; height: 100px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+}
+.profileBox {
+    width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+
+/*Greeting.jsp*/
+.greetingcontent {width:1048px;height:auto;border:1px solid grey;margin-left:auto;margin-right:auto;padding:5px}
+.title {width:1000px;height:60px;border:1px solid grey;margin:5px;text-align:center;display:block}
+.input {width:990px;height:180px;border:1px solid grey;margin:5px;text-align:center;display:block;background-color:#F8E0F7}
+	.insert{width:970px;height:100px;border:1px solid grey;text-align:center;margin:5px 10px;display:block;background-color:#F5A9F2}
+	.search{width:970px;height:60px;border:1px solid grey;text-align:center;margin:5px 10px;display:block;background-color:#F5A9D0}
+.output {width:990px;;border:1px solid grey;display:block;}
+ .greetingBundle {width:970px;height:110px;border:1px solid grey;margin:2px 10px;display:block;}

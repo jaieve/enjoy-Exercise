@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<properties resource="dboracle.properties"></properties>
+	<settings>
+		<setting value="NULL" name="jdbcTypeForNull"/>
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.enjoyexercise.www.vo.UserVO" alias="user" />
+		<typeAlias type="com.enjoyexercise.www.vo.BoardVO" alias="board"/>
+		<typeAlias type="com.enjoyexercise.www.vo.CommentVO" alias="comment"/>
+		<typeAlias type="com.enjoyexercise.www.vo.GreetingVO" alias="greeting"/>
+		
+	</typeAliases>
+	<mappers>
+		<mapper resource="sqlmapper/user-mapper.xml" />
+		<mapper resource="sqlmapper/board-mapper.xml"/>
+		<mapper resource="sqlmapper/reply-mapper.xml"/>
+		<mapper resource="sqlmapper/greeting-mapper.xml"/> 
+	<!--	<mapper resource="sqlmapper/information-mapper.xml"/>  
+		-->
+	</mappers>
+</configuration>
+
